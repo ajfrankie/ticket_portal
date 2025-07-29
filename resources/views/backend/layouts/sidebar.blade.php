@@ -17,9 +17,16 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('admin.customers.index') }}" class="waves-effect">
+                    <a href="{{ route('admin.ticket.index') }}" class="waves-effect">
                         <i class="bx bx-user"></i>
-                        <span key="t-chat">Customers</span>
+                        <span key="t-chat">Tickets</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.replay.index') }}" class="waves-effect">
+                        <i class="bx bx-user"></i>
+                        <span key="t-chat">Replay</span>
                     </a>
                 </li>
 
