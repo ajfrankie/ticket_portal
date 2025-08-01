@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Backend\Auth\LoginController;
 use App\Http\Controllers\Backend\CustomerController;
-use App\Http\Controllers\TicketController;
-use App\Http\Controllers\TicketReplayController;
+use App\Http\Controllers\Backend\TicketController;
+use App\Http\Controllers\Backend\TicketReplayController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +46,7 @@ Route::prefix('/admin')->group(function () {
         Route::post('/store', [TicketController::class, 'store'])->name('admin.ticket.store');
         Route::get('/edit/{id}', [TicketController::class, 'edit'])->name('admin.ticket.edit');
         Route::put('update/{id}', [TicketController::class, 'update'])->name('admin.ticket.update');
-        Route::delete('delete/{id}', [TicketController::class, 'destroy'])->name('admin.ticket.destroy');
+        Route::get('delete/{id}', [TicketController::class, 'destroy'])->name('admin.ticket.destroy');
     });
 
      Route::prefix('/replay')->middleware('auth')->group(function () {
