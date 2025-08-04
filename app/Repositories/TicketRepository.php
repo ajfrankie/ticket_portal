@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Illuminate\Http\Request;
 use App\Models\Ticket;
+use Illuminate\Support\Facades\Log;
 
 class TicketRepository
 {
@@ -16,7 +17,7 @@ class TicketRepository
 
     public function get(Request $request)
     {
-        $query = Ticket::with('user');  
+        $query = Ticket::with('user');
 
         if (!empty($request->subject)) {
             $query->where('subject', 'LIKE', "%{$request->subject}%");
@@ -26,7 +27,7 @@ class TicketRepository
             $query->where('status', $request->status);
         }
 
-        return $query;  
+        return $query;
     }
 
 
@@ -36,7 +37,7 @@ class TicketRepository
         return $this->model->create($input);
     }
 
-    
+
     public function find($id)
     {
         return $this->model->find($id);

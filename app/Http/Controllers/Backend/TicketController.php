@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTicketRequest;
+use App\Models\Ticket;
 use App\Repositories\TicketRepository;
 
 class TicketController extends Controller
@@ -12,14 +13,14 @@ class TicketController extends Controller
 
     public function index(Request $request)
     {
-        $tickets = app(TicketRepository::class)->get($request)->paginate(10);
+        $tickets = app(TicketRepository::class)->get($request)->get();
 
-        // Return the index view with services data
-        return view('backend.tickets.index', [
-            'tickets' => $tickets,
-            'request' => $request
+        return response()->json([
+            'success' => true,
+            'data' => $tickets,
         ]);
     }
+
 
     public function create()
     {
@@ -31,7 +32,9 @@ class TicketController extends Controller
     {
         try {
             $data = $request->validated();
-            $data['user_id'] = auth()->id();
+
+            // Instead of relying on auth(), trust the request input (⚠️ only for dev)
+            $data['user_id'] = $request->input('user_id');
 
             $ticket = app(TicketRepository::class)->create($data);
 
@@ -48,6 +51,7 @@ class TicketController extends Controller
             ], 500);
         }
     }
+
 
 
     public function update(Request $request, $id)
@@ -85,5 +89,24 @@ class TicketController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+
+
+
+    public function show($id)
+    {
+        $ticket = app(TicketRepository::class)->find($id);
+
+        if (!$ticket) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ticket not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $ticket
+        ]);
     }
 }

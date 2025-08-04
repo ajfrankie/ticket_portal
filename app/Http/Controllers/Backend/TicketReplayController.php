@@ -4,37 +4,43 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreReplayRequest;
 use App\Repositories\TicketReplayRepository;
 
 class TicketReplayController extends Controller
 {
-    public function index(Request $request)
+    public function show(Request $request)
     {
-        $replies = app(TicketReplayRepository::class)->get($request)->get();
-        return view('admin.replay.index', [
-            'tickets' => $replies,
-            'request' => $request
+        $replay = app(TicketReplayRepository::class)->get($request)->get();
+
+        if (!$replay) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No replies found for this ticket.',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $replay,
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreReplayRequest $request)
     {
-        $request->validate([
-            'ticket_id' => 'required|exists:tickets,id',
-            'message' => 'required|string',
-        ]);
-
         try {
-            $reply = app(TicketReplayRepository::class)->create([
-                'ticket_id' => $request->ticket_id,
-                'user_id' => auth()->id(),  // ✅ Comes from logged-in user
-                'message' => $request->message,
-            ]);
+            $data = [
+                'ticket_id' => $request->input('ticket_id'),
+                'user_id'   => $request->input('user_id'),
+                'message'   => $request->input('message'),
+            ];
+
+            $reply = app(TicketReplayRepository::class)->create($data);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Reply sent successfully.',
-                'data' => $reply->load('user'), // optional: load user info
+                'data' => $reply->load('user'), 
             ], 201);
         } catch (\Exception $e) {
             return response()->json([

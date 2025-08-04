@@ -26,24 +26,32 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login', [FrontloginController::class, 'login']);
 Route::post('/register', [FrontRegisterController::class, 'register']);
-Route::middleware('auth:sanctum')->post('/logout', [FrontloginController::class, 'logout']);
-Route::middleware('auth:sanctum')->post('admin/ticket/store', [TicketReplayController::class, 'store']); // admin/ticket/store;
+Route::post('/logout', [FrontloginController::class, 'logout']);
+// Route::middleware('auth:sanctum')->post('admin/ticket/store', [TicketController::class, 'store']); // admin/ticket/store;
 
 
-Route::prefix('/admin')->middleware('auth:sanctum')->group(function () {
+Route::prefix('/admin')->group(function () {
     // Admin login routes (commented)
     // Route::get('/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
     // Route::post('/login', [LoginController::class, 'login'])->name('admin.login.submit');
 
     // Ticket routes
     Route::prefix('/ticket')->group(function () {
+        Route::get('/index', [TicketController::class, 'index']);           // admin/ticket/index
         Route::post('/store', [TicketController::class, 'store']);           // admin/ticket/store
         Route::put('/update/{id}', [TicketController::class, 'update']);     // admin/ticket/update/{id}
         Route::get('/delete/{id}', [TicketController::class, 'destroy']);    // admin/ticket/delete/{id}
+        Route::get('/show/{id}', [TicketController::class, 'show']);         // admin/ticket/show/{id}
+
     });
 
     // Replay routes
-    Route::prefix('/replay')->group(function () {});
+    Route::prefix('/replay')->group(function () {
+        Route::post('/store', [TicketReplayController::class, 'store']); // admin/ticket/store;
+         Route::post('/show/{id}', [TicketReplayController::class, 'show']);
+        // 
+    });
+
 
     Route::get('/test-auth', function (Request $request) {
         return response()->json([
