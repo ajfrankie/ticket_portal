@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('ticket_replies', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('ticket_id');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->uuid('user_id');
             $table->text('message');
             $table->timestamps();
 
             // Foreign key to tickets table (UUID)
             $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

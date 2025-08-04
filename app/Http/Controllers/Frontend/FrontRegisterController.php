@@ -18,6 +18,13 @@ class FrontRegisterController extends Controller
     }
 
     public function register(Request $request)
+    // {
+        
+    //     return response()->json([
+    //         'status' => true,
+    //         'message' => `$request 'Customer registered successfully.'`,
+    //     ], 201);
+    // }
     {
         $validator = Validator::make($request->all(), [
             'name'     => 'required|string|max:255',

@@ -51,7 +51,6 @@ Route::prefix('/admin')->group(function () {
 
      Route::prefix('/replay')->middleware('auth')->group(function () {
         Route::get('/', [TicketReplayController::class, 'index'])->name('admin.replay.index');
-        Route::get('/create', [TicketReplayController::class, 'create'])->name('admin.replay.create');
         Route::post('/store', [TicketReplayController::class, 'store'])->name('admin.replay.store');
         Route::get('/edit/{id}', [TicketReplayController::class, 'edit'])->name('admin.replay.edit');
         Route::put('update/{id}', [TicketReplayController::class, 'update'])->name('admin.replay.update');

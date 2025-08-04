@@ -27,6 +27,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/login', [FrontloginController::class, 'login']);
 Route::post('/register', [FrontRegisterController::class, 'register']);
 Route::middleware('auth:sanctum')->post('/logout', [FrontloginController::class, 'logout']);
+Route::middleware('auth:sanctum')->post('admin/ticket/store', [TicketReplayController::class, 'store']); // admin/ticket/store;
+
 
 Route::prefix('/admin')->middleware('auth:sanctum')->group(function () {
     // Admin login routes (commented)
@@ -41,9 +43,12 @@ Route::prefix('/admin')->middleware('auth:sanctum')->group(function () {
     });
 
     // Replay routes
-    Route::prefix('/replay')->group(function () {
-        Route::post('/store', [TicketReplayController::class, 'store'])->name('admin.replay.store');
-        Route::put('/update/{id}', [TicketReplayController::class, 'update'])->name('admin.replay.update');
-        Route::delete('/delete/{id}', [TicketReplayController::class, 'destroy'])->name('admin.replay.destroy');
+    Route::prefix('/replay')->group(function () {});
+
+    Route::get('/test-auth', function (Request $request) {
+        return response()->json([
+            'user_id' => auth()->id(),
+            'user' => $request->user(),
+        ]);
     });
 });

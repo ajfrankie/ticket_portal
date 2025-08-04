@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use PHPUnit\Framework\Attributes\Ticket;
+use App\Models\Ticket;
+use App\Models\User;
 
 class TicketReply extends Model
 {
