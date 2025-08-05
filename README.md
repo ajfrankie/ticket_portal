@@ -2,8 +2,8 @@ Run php artisan db:seed to seed the database with initial data.
 
 The seeding creates an admin user with the following credentials:
 
-<!--?Email: franklinroswer@gmail.com -->
-<!--?Password: 12345678 -->
+<!--! Email: franklinroswer@gmail.com -->
+<!--!  Password: 12345678 -->
 
 Use these credentials to log in and access the system.
 
@@ -16,38 +16,31 @@ Request Validation:
 All API request validation rules are defined in custom Form Request classes inside the app/Http/Requests folder (e.g., StoreTicketRequest).
 These classes handle input validation before reaching controller logic.
 
-<!-- Public Auth Routes:
+Public Auth Routes:
 
-POST /login — User login (FrontloginController@login)
-
-POST /register — User registration (FrontRegisterController@register)
-
-POST /logout — User logout (FrontloginController@logout)
+<!--? POST /login — User login (FrontloginController@login) {{base_url}}/login -->
+<!--? POST /register — User registration (FrontRegisterController@register)  ->{{base_url}}/register -->
+<!--? POST /logout — User logout (FrontloginController@logout) {{base_url}}/logout -->
 
 Authenticated User:
 
-GET /user — Get authenticated user info (middleware auth:sanctum)
-
+<!-- GET /user — Get authenticated user info (middleware auth:sanctum)
 Admin Routes (prefix: /admin):
-
 Ticket Routes (prefix: /admin/ticket):
 
-GET /index — List all tickets (TicketController@index)
-
-POST /store — Create a ticket (TicketController@store)
-
-PUT /update/{id} — Update a ticket by ID (TicketController@update)
-
-GET /delete/{id} — Delete a ticket by ID (TicketController@destroy)
-
-GET /show/{id} — Show ticket details by ID (TicketController@show)
+GET /index — List all tickets (TicketController@index) -->
+<!--? POST /store — Create a ticket (TicketController@store)   ->{{base_url}}/admin/ticket/store -->
+ <!--? PUT /update/{id} — Update a ticket by ID (TicketController@update)  -> {{base_url}}/admin/ticket/update/{id} -->
+<!-- GET /delete/{id} — Delete a ticket by ID (TicketController@destroy)
+GET /show/{id} — Show ticket details by ID (TicketController@show) -->
 
 Replay Routes (prefix: /admin/replay):
 
-POST /store — Store a ticket replay (TicketReplayController@store)
-
-POST /show/{id} — Show ticket replay(s) for ticket (TicketReplayController@show)
+<!--? POST /store — Store a ticket replay (TicketReplayController@store)   -> {{base_url}}/admin/replay/store -->
+<!--POST /show/{id} — Show ticket replay(s) for ticket (TicketReplayController@show)
 
 Test Auth Route:
 
 GET /test-auth — Returns current authenticated user info (user ID and user object) -->
+
+postman-link : https://web.postman.co/workspace/My-Workspace~729e332f-19a9-48ed-8883-b9b5c5928ade/request/42533494-24799e6d-02b5-47f6-a23a-4c6aae301cac?action=share&source=copy-link&creator=42533494
