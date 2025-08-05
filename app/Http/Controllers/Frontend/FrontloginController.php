@@ -26,14 +26,13 @@ class FrontloginController extends Controller
             'message' => 'Login successful',
             'token' => $token,
             'user_id' => $user->id,
+            'role' => $user->role,
         ]);
     }
 
     public function logout(Request $request)
     {
-        // Revoke current access token
         $request->user()->currentAccessToken()->delete();
-
         return response()->json(['message' => 'Logged out successfully']);
     }
 }
